@@ -1,9 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Wallet, ShieldCheck, Zap, Globe, Menu, X, ChevronDown, DollarSign } from 'lucide-react'
 import Link from "next/link"
 
@@ -51,11 +50,6 @@ export function LandingPageComponent() {
     <div className="flex flex-col min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white overflow-hidden">
       <div className="absolute inset-0 bg-[url('/placeholder.svg?height=1080&width=1920')] opacity-5 bg-cover bg-center mix-blend-overlay pointer-events-none" />
       <header className="px-4 lg:px-6 h-20 flex items-center fixed w-full z-50 transition-all duration-300">
-        <motion.div
-          className="absolute inset-0 bg-gray-900/80 backdrop-blur-md"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: scrollYProgress }}
-        />
         <div className="container mx-auto flex items-center justify-between relative z-10">
           <Link className="flex items-center justify-center" href="#">
             <motion.div
@@ -250,7 +244,7 @@ export function LandingPageComponent() {
               >
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl bg-gradient-to-r from-[#339192] to-[#41b5b6] text-transparent bg-clip-text">No need to buy TRX</h2>
                 <p className="max-w-[600px] text-gray-300 md:text-xl/relaxed">
-                  The main advantage of Smooth USDT over other wallets is that you don't ever need to buy TRX tokens to pay transaction fees to the blockchain. All fees are paid in USDT directly.
+                  The main advantage of Smooth USDT over other wallets is that you dont ever need to buy TRX tokens to pay transaction fees to the blockchain. All fees are paid in USDT directly.
                 </p>
               </motion.div>
               <motion.div
