@@ -307,7 +307,7 @@ export function LandingPageComponent() {
                 className="flex flex-col justify-center space-y-4 bg-gray-800 p-8 rounded-xl shadow-lg"
               >
                 <ul className="grid gap-4">
-                  {["256-bit AES encryption", "Multi-factor authentication", "Biometric security options", "Regular third-party security audits"].map((item, index) => (
+                  {["Multi-factor authentication", "Trusted Execution Environment", "Shamir's Secret Sharing", "Secure Smart Contracts"].map((item, index) => (
                     <motion.li
                       key={item}
                       variants={fadeInUpVariants}
