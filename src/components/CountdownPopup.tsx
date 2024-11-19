@@ -2,9 +2,12 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { useEffect, useState } from 'react';
+import posthog from 'posthog-js';
 
 export function CountdownPopup(props: { closePopup: () => void }) {
     const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
+    const [username, setUsername] = useState("");
+    const [isParticipating, setIsParticipating] = useState(false);
 
     useEffect(() => {
         const launchDate = new Date('2024-12-01T00:00:00').getTime()
@@ -30,6 +33,32 @@ export function CountdownPopup(props: { closePopup: () => void }) {
 
         return () => clearInterval(timer)
     }, [])
+
+    const onParticipate = () => {
+        posthog.capture("Closed beta participation", { username })
+        setIsParticipating(true)
+    }
+    
+    const telegramInput = (
+        <div className="space-y-4">
+            <Input
+                placeholder="Your telegram username"
+                className="w-full bg-gray-700 border-gray-600 text-white placeholder-gray-400"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+
+            />
+            <Button disabled={!username} onClick={onParticipate} className="w-full bg-[#339192] hover:bg-[#41b5b6] text-white font-bold py-2 px-4 rounded transition-colors duration-300">
+                Participate in closed beta
+            </Button>
+        </div>
+    );
+
+    const thankYou = (
+        <p className='text-center'>
+            Thank You! We will contact you soon!
+        </p>
+    );
 
     return (
         <AnimatePresence>
@@ -57,16 +86,7 @@ export function CountdownPopup(props: { closePopup: () => void }) {
                             </div>
                         ))}
                     </div>
-                    <form className="space-y-4">
-                        <Input
-                            type="email"
-                            placeholder="Your telegram username"
-                            className="w-full bg-gray-700 border-gray-600 text-white placeholder-gray-400"
-                        />
-                        <Button className="w-full bg-[#339192] hover:bg-[#41b5b6] text-white font-bold py-2 px-4 rounded transition-colors duration-300">
-                            Participate in closed beta
-                        </Button>
-                    </form>
+                    {isParticipating ? thankYou : telegramInput}
                 </motion.div>
             </motion.div>
         </AnimatePresence>
