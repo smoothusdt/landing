@@ -5,9 +5,11 @@ import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import { Button } from "@/components/ui/button"
 import { Wallet, ShieldCheck, Zap, Globe, Menu, X, ChevronDown, DollarSign } from 'lucide-react'
 import Link from "next/link"
+import { CountdownPopup } from './CountdownPopup'
 
 export function LandingPageComponent() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [showCountdown, setShowCountdown] = useState(false)
   const { scrollYProgress } = useScroll()
   const opacity = useTransform(scrollYProgress, [0, 0.05], [1, 0])
   const scale = useTransform(scrollYProgress, [0, 0.05], [1, 0.95])
@@ -48,6 +50,7 @@ export function LandingPageComponent() {
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white overflow-hidden">
+      {showCountdown && <CountdownPopup closePopup={() => setShowCountdown(false)} />}
       <div className="absolute inset-0 bg-[url('/placeholder.svg?height=1080&width=1920')] opacity-5 bg-cover bg-center mix-blend-overlay pointer-events-none" />
       <header className="px-4 lg:px-6 h-20 flex items-center fixed w-full z-50 transition-all duration-300">
         <div className="container mx-auto flex items-center justify-between relative z-10">
@@ -169,10 +172,10 @@ export function LandingPageComponent() {
                 variants={fadeInUpVariants}
                 className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4"
               >
-                <Button onClick={() => window.location.href = "https://app.smoothusdt.com"} className="bg-[#339192] hover:bg-[#41b5b6] text-white font-bold py-2 px-6 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-[#339192]/50">
+                <Button onClick={() => setShowCountdown(true)} className="bg-[#339192] hover:bg-[#41b5b6] text-white font-bold py-2 px-6 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-[#339192]/50">
                   Get Started
                 </Button>
-                <Button onClick={() => window.location.href = "https://info.smoothusdt.com"} variant="outline" className="border-[#339192] text-[#339192] hover:bg-[#339192] hover:text-white transition-all duration-300 rounded-full">
+                <Button onClick={() => setShowCountdown(true)} variant="outline" className="border-[#339192] text-[#339192] hover:bg-[#339192] hover:text-white transition-all duration-300 rounded-full">
                   Learn More
                 </Button>
               </motion.div>
@@ -353,7 +356,7 @@ export function LandingPageComponent() {
                 </p>
               </motion.div>
               <motion.div variants={fadeInUpVariants} className="w-full max-w-md space-y-4">
-                <Button onClick={() => window.location.href = "https://app.smoothusdt.com"} type="submit" className="bg-[#339192] hover:bg-[#41b5b6] text-white font-bold transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-[#339192]/50">
+                <Button onClick={() => setShowCountdown(true)} type="submit" className="bg-[#339192] hover:bg-[#41b5b6] text-white font-bold transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-[#339192]/50">
                   Download Smooth USDT
                 </Button>
               </motion.div>
