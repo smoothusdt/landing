@@ -10,7 +10,7 @@ export function CountdownPopup(props: { closePopup: () => void }) {
     const [isParticipating, setIsParticipating] = useState(false);
 
     useEffect(() => {
-        const launchDate = new Date('2024-12-01T00:00:00').getTime()
+        const launchDate = new Date('2024-12-05T12:00:00').getTime()
 
         const countdownFunc = () => {
             const now = new Date().getTime()
