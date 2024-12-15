@@ -1,403 +1,48 @@
 'use client'
+import { motion } from 'framer-motion'
 
-import { useState } from 'react'
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
-import { Button } from "@/components/ui/button"
-import { Wallet, ShieldCheck, Zap, Globe, Menu, X, ChevronDown, DollarSign } from 'lucide-react'
-import Link from "next/link"
-import { CountdownPopup } from './CountdownPopup'
+function SmoothLogo() {
+  return (
+    <svg width="80" height="80" viewBox="0 0 161 161" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="80.5" cy="80.5" r="80.5" fill="#4CB0B2" />
+      <path d="M112.875 40.0917H49.7044C46.9446 40.0917 44.3798 41.5141 42.9183 43.855L24.3864 73.5386C22.4062 76.7103 22.8872 80.8307 25.5447 83.461L75.0046 132.416C78.1275 135.507 83.1588 135.501 86.2741 132.402L135.629 83.3099C138.205 80.748 138.731 76.7721 136.91 73.6285L119.798 44.0822C118.367 41.6123 115.729 40.0917 112.875 40.0917Z" fill="white" />
+      <path d="M96.0745 69.0258C93.5434 69.0258 91.5986 66.9053 89.9765 64.9623C89.5574 64.4603 89.061 64.0081 88.4874 63.6056C86.6622 62.3126 84.2877 61.666 81.3638 61.666C79.3083 61.666 77.5451 61.976 76.0744 62.596C74.6036 63.2159 73.4784 64.0573 72.6987 65.1201C71.919 66.1828 71.5203 67.3962 71.5026 68.7601C71.5026 69.8937 71.7595 70.8768 72.2734 71.7093C72.805 72.5418 73.5227 73.2503 74.4264 73.8348C75.3301 74.4016 76.3313 74.8799 77.43 75.2696C78.5286 75.6593 79.6361 75.987 80.7525 76.2527L85.8559 77.528C87.9115 78.0062 89.8873 78.6528 91.7833 79.4676C93.6971 80.2823 95.4071 81.3097 96.9133 82.5496C98.4373 83.7895 99.6422 85.2863 100.528 87.0398C101.414 88.7934 101.857 90.8481 101.857 93.2039C101.857 96.3923 101.042 99.1998 99.4119 101.626C97.7816 104.035 95.4248 105.922 92.3415 107.286C89.2759 108.632 85.5635 109.305 81.2044 109.305C76.9692 109.305 73.2923 108.65 70.1735 107.339C67.0725 106.028 64.6448 104.115 62.8905 101.6C62.0294 100.353 61.3643 98.9703 60.8953 97.4529C60.069 94.7793 62.4016 92.4069 65.2 92.4069V92.4069C67.78 92.4069 69.7212 94.5807 71.1971 96.6968C71.3021 96.8474 71.4128 96.9938 71.5291 97.1362C72.5569 98.3938 73.8948 99.3326 75.5428 99.9526C77.2085 100.573 79.0691 100.883 81.1246 100.883C83.2688 100.883 85.1471 100.564 86.7597 99.926C88.3899 99.2706 89.6658 98.3673 90.5872 97.2159C91.5087 96.0469 91.9782 94.683 91.996 93.1242C91.9782 91.7072 91.5618 90.5381 90.7467 89.6171C89.9316 88.6783 88.7886 87.8989 87.3178 87.279C85.8648 86.6413 84.1636 86.0745 82.2144 85.5785L76.0212 83.9844C71.538 82.833 67.994 81.0883 65.3891 78.7502C62.8019 76.3944 61.5084 73.268 61.5084 69.3712C61.5084 66.1651 62.3767 63.3576 64.1132 60.9487C65.8675 58.5397 68.2509 56.671 71.2633 55.3425C74.2758 53.9963 77.6869 53.3232 81.4968 53.3232C85.3598 53.3232 88.7443 53.9963 91.6504 55.3425C94.5743 56.671 96.869 58.522 98.5347 60.8955C99.2426 61.8967 99.8049 62.9618 100.222 64.0909C101.18 66.6882 98.8429 69.0258 96.0745 69.0258V69.0258Z" fill="#4CB0B2" />
+    </svg>
+
+  );
+}
 
 export function LandingPageComponent() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [showCountdown, setShowCountdown] = useState(false)
-  const { scrollYProgress } = useScroll()
-  const opacity = useTransform(scrollYProgress, [0, 0.05], [1, 0])
-  const scale = useTransform(scrollYProgress, [0, 0.05], [1, 0.95])
-
-  const fadeInUpVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: [0.6, -0.05, 0.01, 0.99]
-      }
-    }
-  }
-
-  const staggerChildren = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  }
-
-  const floatingAnimation = {
-    y: ['-4%', '4%'],
-    transition: {
-      y: {
-        duration: 2,
-        repeat: Infinity,
-        repeatType: 'reverse',
-        ease: 'easeInOut'
-      }
-    }
-  }
-
+  
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white overflow-hidden">
-      {showCountdown && <CountdownPopup closePopup={() => setShowCountdown(false)} />}
-      <div className="absolute inset-0 bg-[url('/placeholder.svg?height=1080&width=1920')] opacity-5 bg-cover bg-center mix-blend-overlay pointer-events-none" />
-      <header className="px-4 lg:px-6 h-20 flex items-center fixed w-full z-50 transition-all duration-300">
-        <div className="container mx-auto flex items-center justify-between relative z-10">
-          <Link className="flex items-center justify-center" href="#">
-            <motion.div
-              initial={{ rotate: -180, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              transition={{ duration: 0.5 }}
-            >
-              <Wallet className="h-10 w-10 text-[#339192]" />
-            </motion.div>
-            <motion.span
-              initial={{ x: -20, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="ml-2 text-2xl font-bold bg-gradient-to-r from-[#339192] to-[#41b5b6] text-transparent bg-clip-text"
-            >
-              Smooth USDT
-            </motion.span>
-          </Link>
-          <nav className="hidden md:flex gap-8">
-            {['Features', 'No TRX', 'Security', 'Download'].map((item, index) => (
-              <motion.div
-                key={item}
-                initial={{ y: -20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.1 * (index + 1), duration: 0.5 }}
-              >
-                <Link className="text-sm font-medium hover:text-[#339192] transition-colors relative group" href={`#${item.toLowerCase().replaceAll(' ', '-')}`}>
-                  {item}
-                  <motion.span
-                    className="absolute left-0 bottom-0 w-full h-0.5 bg-[#339192]"
-                    initial={{ scaleX: 0 }}
-                    whileHover={{ scaleX: 1 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                </Link>
-              </motion.div>
-            ))}
-          </nav>
-          <Button
-            className="md:hidden"
-            variant="ghost"
-            size="icon"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            <Menu className="h-6 w-6" />
-          </Button>
-        </div>
-      </header>
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, x: '100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '100%' }}
-            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className="fixed inset-0 z-40 bg-gray-900/95 backdrop-blur-lg md:hidden"
-          >
-            <nav className="flex flex-col items-center justify-center h-full space-y-8">
-              <Button
-                className="absolute top-4 right-4"
-                variant="ghost"
-                size="icon"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <X className="h-6 w-6" />
-              </Button>
-              {['Features', 'Security', 'Download'].map((item, index) => (
-                <motion.div
-                  key={item}
-                  initial={{ x: 20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: 0.1 * (index + 1), type: 'spring', stiffness: 300, damping: 30 }}
-                >
-                  <Link
-                    className="text-2xl font-medium hover:text-[#339192] transition-colors"
-                    href={`#${item.toLowerCase()}`}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item}
-                  </Link>
-                </motion.div>
-              ))}
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
-      <main className="flex-1">
-        <section className="relative w-full py-20 md:py-32 lg:py-40 xl:py-56 overflow-hidden">
-          <motion.div
-            style={{ opacity, scale }}
-            className="container mx-auto px-4 md:px-6 relative z-10"
-          >
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={staggerChildren}
-              className="flex flex-col items-center space-y-8 text-center"
-            >
-              <motion.div variants={fadeInUpVariants} className="space-y-4">
-                <h1 className="text-4xl font-extrabold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl/none">
-                  <span className="bg-gradient-to-r from-[#339192] to-[#41b5b6] text-transparent bg-clip-text">
-                    Secure Your Crypto
-                  </span>
-                  <br />
-                  <span className="bg-gradient-to-r from-white to-gray-400 text-transparent bg-clip-text">
-                    with Smooth USDT
-                  </span>
-                </h1>
-                <motion.p
-                  variants={fadeInUpVariants}
-                  className="mx-auto max-w-[700px] text-gray-400 md:text-xl dark:text-gray-300"
-                >
-                  The most secure and user-friendly crypto wallet for USDT TRC-20. No need to buy and manage TRX tokens.
-                </motion.p>
-              </motion.div>
-              <motion.div
-                variants={fadeInUpVariants}
-                className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4"
-              >
-                <Button onClick={() => setShowCountdown(true)} className="bg-[#339192] hover:bg-[#41b5b6] text-white font-bold py-2 px-6 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-[#339192]/50">
-                  Get Started
-                </Button>
-                <Button onClick={() => setShowCountdown(true)} variant="outline" className="border-[#339192] text-[#339192] hover:bg-[#339192] hover:text-white transition-all duration-300 rounded-full">
-                  Learn More
-                </Button>
-              </motion.div>
-            </motion.div>
-          </motion.div>
-          <motion.div
-            animate={floatingAnimation}
-            className="absolute bottom-0 left-1/2 transform -translate-x-1/2"
-          >
-            <ChevronDown className="h-12 w-12 text-[#339192] animate-bounce" />
-          </motion.div>
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900 pointer-events-none" />
-        </section>
-        <section id="features" className="w-full py-20 md:py-32 bg-gray-800 relative overflow-hidden">
-          <div className="container mx-auto px-4 md:px-6 relative z-10">
-            <motion.h2
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeInUpVariants}
-              className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-16 bg-gradient-to-r from-[#339192] to-[#41b5b6] text-transparent bg-clip-text"
-            >
-              Key Features
-            </motion.h2>
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={staggerChildren}
-              className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3"
-            >
-              {[
-                { icon: ShieldCheck, title: "Bank-Grade Security", description: "Your assets are protected with state-of-the-art encryption and smart contract verification." },
-                { icon: Zap, title: "Easy Transactions", description: "Sending money from Smooth USDT is easy. Transfer fee is a constant of 1.5 USDT. No need to buy TRX like in other wallets." },
-                { icon: Globe, title: "Global Transfers", description: "Send money to any USDT TRC-20 wallet around the world. Deposit / withdraw funds from any exchange." }
-              ].map((feature, index) => (
-                <motion.div
-                  key={feature.title}
-                  variants={fadeInUpVariants}
-                  custom={index}
-                  className="flex flex-col items-center space-y-4 p-6 bg-gray-700 rounded-xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-[#339192]/20"
-                  whileHover={{ y: -5 }}
-                >
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 0.2 * (index + 1), type: 'spring', stiffness: 300, damping: 20 }}
-                  >
-                    <feature.icon className="h-12 w-12 text-[#339192]" />
-                  </motion.div>
-                  <h3 className="text-xl font-bold text-[#339192]">{feature.title}</h3>
-                  <p className="text-sm text-gray-300 text-center">{feature.description}</p>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-          <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-gray-900 to-transparent pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-gray-900 to-transparent pointer-events-none" />
-        </section>
-        <section id="no-trx" className="w-full py-20 md:py-32 bg-gray-900 relative overflow-hidden">
-          <div className="container mx-auto px-4 md:px-6 relative z-10">
-            <div className="grid gap-10 lg:grid-cols-2 items-center">
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeInUpVariants}
-                className="space-y-4"
-              >
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl bg-gradient-to-r from-[#339192] to-[#41b5b6] text-transparent bg-clip-text">No need to buy TRX</h2>
-                <p className="max-w-[600px] text-gray-300 md:text-xl/relaxed">
-                  The main advantage of Smooth USDT over other wallets is that you dont ever need to buy TRX tokens to pay transaction fees to the blockchain. All fees are paid in USDT directly.
-                </p>
-              </motion.div>
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={staggerChildren}
-                className="flex flex-col justify-center space-y-4 bg-gray-800 p-8 rounded-xl shadow-lg"
-              >
-                <ul className="grid gap-4">
-                  {["No need to buy TRX tokens", "All fees are paid directly in USDT", "Fixed cost of 1.5 USDT per transfer", "Receive and send USDT to anyone"].map((item, index) => (
-                    <motion.li
-                      key={item}
-                      variants={fadeInUpVariants}
-                      custom={index}
-                      className="flex items-center space-x-2"
-                    >
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ delay: 0.1 * (index + 1), type: 'spring', stiffness: 300, damping: 20 }}
-                      >
-                        <DollarSign className="h-5 w-5 text-[#339192]" />
-                      </motion.div>
-                      <span className="text-gray-200">{item}</span>
-                    </motion.li>
-                  ))}
-                </ul>
-              </motion.div>
-            </div>
-          </div>
-          <motion.div
-            className="absolute inset-0 bg-[url('/placeholder.svg?height=1080&width=1920')] opacity-5 bg-cover bg-center mix-blend-overlay pointer-events-none"
-            initial={{ scale: 1.1 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 10, repeat: Infinity, repeatType: 'reverse', ease: 'linear' }}
-          />
-        </section>
-        <section id="security" className="w-full py-20 md:py-32 bg-gray-900 relative overflow-hidden">
-          <div className="container mx-auto px-4 md:px-6 relative z-10">
-            <div className="grid gap-10 lg:grid-cols-2 items-center">
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeInUpVariants}
-                className="space-y-4"
-              >
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl bg-gradient-to-r from-[#339192] to-[#41b5b6] text-transparent bg-clip-text">Your Security is Our Priority</h2>
-                <p className="max-w-[600px] text-gray-300 md:text-xl/relaxed">
-                  We employ cutting-edge security measures to ensure your digital assets remain safe and secure at all times.
-                  Our wallet uses advanced encryption, secure key management, and regular security audits to protect your investments.
-                </p>
-              </motion.div>
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={staggerChildren}
-                className="flex flex-col justify-center space-y-4 bg-gray-800 p-8 rounded-xl shadow-lg"
-              >
-                <ul className="grid gap-4">
-                  {["Multi-factor authentication", "Trusted Execution Environment", "Shamir's Secret Sharing", "Secure Smart Contracts"].map((item, index) => (
-                    <motion.li
-                      key={item}
-                      variants={fadeInUpVariants}
-                      custom={index}
-                      className="flex items-center space-x-2"
-                    >
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ delay: 0.1 * (index + 1), type: 'spring', stiffness: 300, damping: 20 }}
-                      >
-                        <ShieldCheck className="h-5 w-5 text-[#339192]" />
-                      </motion.div>
-                      <span className="text-gray-200">{item}</span>
-                    </motion.li>
-                  ))}
-                </ul>
-              </motion.div>
-            </div>
-          </div>
-          <motion.div
-            className="absolute inset-0 bg-[url('/placeholder.svg?height=1080&width=1920')] opacity-5 bg-cover bg-center mix-blend-overlay pointer-events-none"
-            initial={{ scale: 1.1 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 10, repeat: Infinity, repeatType: 'reverse', ease: 'linear' }}
-          />
-        </section>
-        <section id="download" className="w-full py-20 md:py-32 bg-gradient-to-b from-gray-800 to-gray-900 relative overflow-hidden">
-          <div className="container mx-auto px-4 md:px-6 relative z-10">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={staggerChildren}
-              className="flex flex-col items-center justify-center space-y-8 text-center"
-            >
-              <motion.div variants={fadeInUpVariants} className="space-y-4">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl bg-gradient-to-r from-[#339192] to-[#41b5b6] text-transparent bg-clip-text">
-                  Ready to Secure Your Crypto?
-                </h2>
-                <p className="mx-auto max-w-[600px] text-gray-300 md:text-xl">
-                  Download Smooth USDT Wallet now and send / receive USDT TRC-20 easily and securely.
-                </p>
-              </motion.div>
-              <motion.div variants={fadeInUpVariants} className="w-full max-w-md space-y-4">
-                <Button onClick={() => setShowCountdown(true)} type="submit" className="bg-[#339192] hover:bg-[#41b5b6] text-white font-bold transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-[#339192]/50">
-                  Download Smooth USDT
-                </Button>
-              </motion.div>
-            </motion.div>
-          </div>
-          <motion.div
-            className="absolute inset-0 bg-[url('/placeholder.svg?height=1080&width=1920')] opacity-5 bg-cover bg-center mix-blend-overlay pointer-events-none"
-            animate={{
-              backgroundPosition: ['0% 0%', '100% 100%'],
-            }}
-            transition={{
-              duration: 50,
-              repeat: Infinity,
-              repeatType: 'reverse',
-              ease: 'linear',
-            }}
-          />
-        </section>
-      </main>
-      <footer className="w-full py-8 bg-gray-900 border-t border-gray-800">
-        <div className="container mx-auto px-4 md:px-6">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerChildren}
-            className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0"
-          >
-            <motion.p variants={fadeInUpVariants} className="text-sm text-gray-400">
-              © 2024 Smooth USDT Wallet. All rights reserved.
-            </motion.p>
-            <motion.nav variants={fadeInUpVariants} className="flex gap-4 sm:gap-6">
-              {["Terms of Service", "Privacy Policy", "Contact Us"].map((item) => (
-                <Link key={item} className="text-sm hover:text-[#339192] transition-colors" href="#">
-                  {item}
-                </Link>
-              ))}
-            </motion.nav>
-          </motion.div>
-        </div>
-      </footer>
+    <div className="w-full min-h-screen bg-[#061313] flex justify-center items-center">
+      <motion.div>
+        <motion.div
+          initial={{ scale: 0.5, rotate: -180 }}
+          animate={{ scale: 1, rotate: 0 }}
+          transition={{ duration: 0.8, type: 'spring', stiffness: 200 }}
+          className="mb-6 flex justify-center"
+        >
+          <SmoothLogo />
+        </motion.div>
+        <motion.h1
+          className="text-4xl font-bold mb-4 text-center text-white"
+          initial={{ scale: 0.9 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
+        >
+          Smooth USDT
+        </motion.h1>
+        <motion.button
+          onClick={() => window.location.href = `https://wallet.${window.location.host}`}
+          whileHover={{scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="flex items-center justify-center w-full py-3 rounded-lg hover:bg-[#2a7475] transition-all duration-300 mt-4 bg-[#339192] text-white shadow-lg hover:shadow-xl"
+        >
+          Open Wallet
+        </motion.button>
+        );
+        </motion.div>
     </div>
   )
 }
